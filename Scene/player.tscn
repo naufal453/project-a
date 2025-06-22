@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://brpukwfa3pbrk"]
+[gd_scene load_steps=27 format=3 uid="uid://brpukwfa3pbrk"]
 
 [ext_resource type="Texture2D" uid="uid://csap2j3u8ywny" path="res://Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="1_kelma"]
 [ext_resource type="Script" uid="uid://c2bv0rfvf8m7j" path="res://Scene/player.gd" id="1_xa75v"]
@@ -153,55 +153,53 @@ animations = [{
 radius = 20.0
 height = 50.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_58ae2"]
-radius = 30.0
-height = 110.0
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_58ae2"]
 radius = 48.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ivevv"]
-radius = 32.0
-height = 106.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_ivevv"]
+radius = 39.2593
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_xa75v")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -24)
+position = Vector2(1, -24)
 sprite_frames = SubResource("SpriteFrames_c68nv")
 animation = &"Attack"
-frame_progress = 0.845541
+frame_progress = 0.156025
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -9)
 shape = SubResource("CapsuleShape2D_kelma")
 
-[node name="AttackHorizontal" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHorizontal"]
-position = Vector2(38, -24)
-shape = SubResource("CapsuleShape2D_58ae2")
-
 [node name="hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(-5, -29)
+position = Vector2(0, -28)
 shape = SubResource("CircleShape2D_58ae2")
+
+[node name="AttackHorizontal" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHorizontal"]
+position = Vector2(27, -15)
+scale = Vector2(1, 1.15)
+shape = SubResource("CircleShape2D_ivevv")
+one_way_collision_margin = 0.0
+debug_color = Color(0.703295, 0.478954, 0.294413, 0.42)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="AttackHorizontal"]
+position = Vector2(0, -3)
+scale = Vector2(1.35, 1)
+shape = SubResource("CircleShape2D_ivevv")
+one_way_collision_margin = 0.0
+debug_color = Color(0.703295, 0.478954, 0.294413, 0.42)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.235, 1.235)
 
-[node name="AttackVertical" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackVertical"]
-position = Vector2(-1, 4)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_ivevv")
-
 [node name="attack_cooldown_timer" type="Timer" parent="."]
 
-[connection signal="body_entered" from="AttackHorizontal" to="." method="_on_attack_body_entered"]
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="body_entered" from="AttackHorizontal" to="." method="_on_attack_body_entered"]
 [connection signal="timeout" from="attack_cooldown_timer" to="." method="_on_attack_cooldown_timeout"]

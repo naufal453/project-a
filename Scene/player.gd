@@ -15,8 +15,8 @@ var attack_duration_timer := 0.0
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var attack_area_horizontal = $AttackHorizontal
 @onready var attack_shape_horizontal = $AttackHorizontal/CollisionShape2D
-@onready var attack_area_vertical = $AttackVertical
-@onready var attack_shape_vertical = $AttackVertical/CollisionShape2D
+#@onready var attack_area_vertical = $AttackVertical
+@onready var attack_shape_vertical = $AttackHorizontal/CollisionShape2D2
 
 func _physics_process(delta: float) -> void:
 	var input_vector := get_input_vector()
@@ -91,24 +91,14 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.has_method("enemy"):
 		random_entity_inattack_range = true
 
-func _on_attack_body_entered(body: Node) -> void:
-	if body.has_method("take_damage"):
-		body.take_damage(20) # Adjust damage as needed
-		#print("aduh")
-
-func _on_attack_horizontal_body_entered(body: Node) -> void:
-	if body.has_method("take_damage"):
-		body.take_damage(20)
-		print("Hit horizontal")
-
-func _on_attack_vertical_body_entered(body: Node) -> void:
-	if body.has_method("take_damage"):
-		body.take_damage(20)
-		print("Hit vertical")
-
 func random_entity_attack():
 	if random_entity_inattack_range:
 		print("gedebuk")
 
 func player():
 	pass
+
+
+func _on_attack_body_entered(body: Node2D) -> void:
+	if body.has_method("take_damage"):
+		body.take_damage(10)
