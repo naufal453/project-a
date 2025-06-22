@@ -94,7 +94,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Attack",
-"speed": 30.0
+"speed": 14.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -171,8 +171,7 @@ script = ExtResource("1_xa75v")
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_c68nv")
 animation = &"Attack"
-frame = 1
-frame_progress = 0.858903
+frame_progress = 0.845541
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -9)
@@ -200,6 +199,9 @@ position = Vector2(-1, 4)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_ivevv")
 
+[node name="attack_cooldown_timer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="AttackHorizontal" to="." method="_on_attack_body_entered"]
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="timeout" from="attack_cooldown_timer" to="." method="_on_attack_cooldown_timeout"]

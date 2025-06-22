@@ -3,10 +3,14 @@ extends CharacterBody2D
 @export var speed: float = 200.0
 var last_horizontal_direction: int = 1
 var last_vertical_direction: int = 1
-var enemy_inattack_range = false
-var enemy_attack_cooldown = true
+var random_entity_inattack_range = false
+var random_entity_attack_cooldown = true
 var health = 100
 var player_alive = true
+var attack_cooldown_time := 1.0 # seconds
+var attack_cooldown_timer := 0.0
+var attack_duration_time := 0.3 # seconds the attack is active
+var attack_duration_timer := 0.0
 
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var attack_area_horizontal = $AttackHorizontal
@@ -16,11 +20,19 @@ var player_alive = true
 
 func _physics_process(delta: float) -> void:
 	var input_vector := get_input_vector()
-	
+
+	# Update attack cooldown timer
+	if attack_cooldown_timer > 0.0:
+		attack_cooldown_timer -= delta
+
+	# Update attack duration timer
+	if attack_duration_timer > 0.0:
+		attack_duration_timer -= delta
+
 	handle_attack()
 	play_animation(input_vector)
 	update_direction(input_vector)
-	enemy_attack()
+	random_entity_attack()
 	# Move only if not attacking
 	if not Input.is_action_pressed("attack"):
 		velocity = input_vector * speed
@@ -33,8 +45,13 @@ func get_input_vector() -> Vector2:
 	).normalized()
 
 func handle_attack() -> void:
-	if Input.is_action_pressed("attack"):
+	if Input.is_action_pressed("attack") and attack_cooldown_timer <= 0.0:
 		animated_sprite.play("Attack")
+		attack_duration_timer = attack_duration_time # Start attack duration
+		attack_cooldown_timer = attack_cooldown_time # Start cooldown
+
+	# Enable attack shapes only during attack duration
+	if attack_duration_timer > 0.0:
 		attack_shape_horizontal.disabled = false
 		attack_shape_vertical.disabled = false
 	else:
@@ -42,8 +59,14 @@ func handle_attack() -> void:
 		attack_shape_vertical.disabled = true
 
 func play_animation(input_vector: Vector2) -> void:
-	if Input.is_action_pressed("attack"):
-		return  # Prioritaskan animasi serangan
+	if attack_duration_timer > 0.0:
+		# Attack animation is active during attack duration
+		if animated_sprite.animation != "Attack":
+			animated_sprite.play("Attack")
+		return
+	elif attack_cooldown_timer > 0.0 and input_vector == Vector2.ZERO:
+		# During cooldown but not attacking, play idle
+		animated_sprite.play("Idle")
 	elif input_vector == Vector2.ZERO:
 		animated_sprite.play("Idle")
 	else:
@@ -61,12 +84,12 @@ func update_direction(input_vector: Vector2) -> void:
 
 func _on_hitbox_body_exited(body: Node2D) -> void:
 	if body.has_method("enemy"):
-		enemy_inattack_range=false
+		random_entity_inattack_range=false
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.has_method("enemy"):
-		enemy_inattack_range = true
+		random_entity_inattack_range = true
 
 func _on_attack_body_entered(body: Node) -> void:
 	if body.has_method("take_damage"):
@@ -83,8 +106,8 @@ func _on_attack_vertical_body_entered(body: Node) -> void:
 		body.take_damage(20)
 		print("Hit vertical")
 
-func enemy_attack():
-	if enemy_inattack_range:
+func random_entity_attack():
+	if random_entity_inattack_range:
 		print("gedebuk")
 
 func player():
