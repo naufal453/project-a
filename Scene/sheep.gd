@@ -31,7 +31,7 @@ func randomize_direction():
 
 func animation():
 	if damaged:
-		$AnimatedSprite2D.play("Hit")
+		#$AnimatedSprite2D.play("Hit")
 		damaged = false
 	elif direction == Vector2.ZERO:
 		if is_eating:

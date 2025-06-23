@@ -247,8 +247,7 @@ script = ExtResource("1_xa75v")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -24)
 sprite_frames = SubResource("SpriteFrames_c68nv")
-animation = &"Guard"
-frame_progress = 0.5237
+animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -9)
@@ -276,6 +275,22 @@ shape = SubResource("CircleShape2D_ivevv")
 one_way_collision_margin = 0.0
 debug_color = Color(0.703295, 0.478954, 0.294413, 0.42)
 
+[node name="Combo" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Combo"]
+position = Vector2(27, -15)
+scale = Vector2(1, 1.15)
+shape = SubResource("CircleShape2D_ivevv")
+one_way_collision_margin = 0.0
+debug_color = Color(0.703295, 0.478954, 0.294413, 0.42)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Combo"]
+position = Vector2(0, -3)
+scale = Vector2(1.35, 1)
+shape = SubResource("CircleShape2D_ivevv")
+one_way_collision_margin = 0.0
+debug_color = Color(0.703295, 0.478954, 0.294413, 0.42)
+
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.235, 1.235)
 
@@ -284,4 +299,5 @@ zoom = Vector2(1.235, 1.235)
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_entered" from="Attack" to="." method="_on_attack_body_entered"]
+[connection signal="body_entered" from="Combo" to="." method="_on_combo_body_entered"]
 [connection signal="timeout" from="attack_cooldown_timer" to="." method="_on_attack_cooldown_timeout"]
