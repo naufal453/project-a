@@ -12,9 +12,10 @@ var attack_duration := 0.3
 var attack_duration_timer := 0.0
 @onready var attack_sound = $AttackSFX
 @onready var combo_sound = $ComboSFX
+@onready var hit_sound = $HitSFX
 var combo_ready := false
 var is_combo_attacking := false
-
+var hit := false
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var attack_shape_horizontal = $Attack/CollisionShape2D
 @onready var attack_shape_vertical = $Attack/CollisionShape2D2
@@ -71,7 +72,10 @@ func _process_attack(input_vector: Vector2) -> void:
 
 func _start_attack(input_vector: Vector2) -> void:
 	is_combo_attacking = false
-	animated_sprite.play("Attack")
+	#if hit == true:
+		#animated_sprite.play("Attacked")
+	#else:
+		#animated_sprite.play("Attack")
 	attack_duration_timer = attack_duration
 	attack_cooldown_timer = attack_cooldown
 	velocity = _get_attack_velocity(input_vector)
@@ -80,7 +84,7 @@ func _start_attack(input_vector: Vector2) -> void:
 
 func _start_combo(input_vector: Vector2) -> void:
 	is_combo_attacking = true
-	animated_sprite.play("Combo")
+	#animated_sprite.play("Combo")
 	attack_duration_timer = attack_duration
 	attack_cooldown_timer = attack_cooldown
 	velocity = _get_combo_velocity(input_vector)
@@ -103,7 +107,12 @@ func _is_attacking() -> bool:
 
 func _update_animation(input_vector: Vector2) -> void:
 	if _is_attacking():
-		animated_sprite.play("Combo" if is_combo_attacking else "Attack")
+		if is_combo_attacking:
+			animated_sprite.play("Combo")
+		elif hit:
+			animated_sprite.play("Attacked")
+		else:
+			animated_sprite.play("Attack")
 	elif input_vector == Vector2.ZERO:
 		animated_sprite.play("Idle")
 	else:
@@ -119,7 +128,15 @@ func _update_direction(input_vector: Vector2) -> void:
 func _on_attack_body_entered(body: Node2D) -> void:
 	if body.has_method("take_damage"):
 		body.take_damage(10)
+		hit_sound.play()
+		hit = true
+	else :
+		hit = false
 
 func _on_combo_body_entered(body: Node2D) -> void:
 	if body.has_method("take_damage"):
 		body.take_damage(5)
+		hit_sound.play()
+		hit = false
+	else:
+		hit= true

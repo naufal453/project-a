@@ -7,14 +7,22 @@ var speed := 50
 var change_direction_time := 1.0
 var direction_timer := 0.0
 var is_eating := false
-var sheep_exist = true
+var sheep_sound_timer := 0.0
+var sheep_sound_interval := 3.0
 @onready var health_bar = $Healthbar
+@onready var sheep_sound = $sheep_sound
 
 func _ready() -> void:
 	health_bar.init_health(health)
+	sheep_sound.play()
 
-
+func _process(delta: float) -> void:
+	sheep_sound_timer -= delta
+	if sheep_sound_timer <= 0.0:
+		sheep_sound.play()
+		sheep_sound_timer = sheep_sound_interval
 func _physics_process(delta: float) -> void:
+	
 	direction_timer -= delta
 	if direction_timer <= 0.0:
 		randomize_direction()
@@ -57,7 +65,9 @@ func take_damage(amount: int) -> void:
 	print("Random Entity health:", health)
 	if health <= 0:
 		queue_free()
-		sheep_exist = false
-	else:
-		sheep_exist=true
+		_on_sheep_sound_finished()
 	health_bar.health = health
+
+
+func _on_sheep_sound_finished() -> void:
+	pass # Replace with function body.

@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cb705u2dubt3o"]
+[gd_scene load_steps=8 format=3 uid="uid://cb705u2dubt3o"]
 
 [ext_resource type="Texture2D" uid="uid://vg5aiuekiyq7" path="res://Tiny Swords (Free Pack)/Terrain/Tilemap_color1.png" id="1_ejll3"]
 [ext_resource type="PackedScene" uid="uid://brpukwfa3pbrk" path="res://Scene/player.tscn" id="1_emx41"]
 [ext_resource type="Script" uid="uid://dd2x1k6xay4mo" path="res://Scene/world.gd" id="1_pcvp0"]
 [ext_resource type="PackedScene" uid="uid://cdlg2438emy4e" path="res://Scene/sheep.tscn" id="3_ejll3"]
-[ext_resource type="AudioStream" uid="uid://c32eu4dk1ta0w" path="res://audio/sfx/sheep-352668.mp3" id="4_scul4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_scul4"]
 texture = ExtResource("1_ejll3")
@@ -1323,9 +1322,3 @@ position = Vector2(726, 166)
 
 [node name="sheep4" parent="." instance=ExtResource("3_ejll3")]
 position = Vector2(419, 365)
-
-[node name="sheep_sound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_scul4")
-volume_db = -23.665
-
-[connection signal="finished" from="sheep_sound" to="." method="_on_sheep_sound_finished"]

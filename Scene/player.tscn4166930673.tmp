@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://brpukwfa3pbrk"]
+[gd_scene load_steps=46 format=3 uid="uid://brpukwfa3pbrk"]
 
 [ext_resource type="Texture2D" uid="uid://csap2j3u8ywny" path="res://Tiny Swords (Free Pack)/Units/Black Units/Warrior/Warrior_Idle.png" id="1_kelma"]
 [ext_resource type="Script" uid="uid://c2bv0rfvf8m7j" path="res://Scene/player.gd" id="1_xa75v"]
@@ -277,9 +277,6 @@ radius = 48.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_ivevv"]
 radius = 39.2593
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ij4jb"]
-height = 238.0
-
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_xa75v")
 
@@ -287,7 +284,7 @@ script = ExtResource("1_xa75v")
 position = Vector2(8, -11)
 sprite_frames = SubResource("SpriteFrames_c68nv")
 animation = &"Attacked"
-frame_progress = 0.38626
+frame_progress = 0.693978
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -9)
@@ -351,16 +348,8 @@ pitch_scale = 0.71
 stream = ExtResource("8_2sw5t")
 volume_db = -8.351
 
-[node name="HitDetected" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitDetected"]
-position = Vector2(119, -7)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_ij4jb")
-
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_entered" from="Attack" to="." method="_on_attack_body_entered"]
 [connection signal="body_entered" from="Combo" to="." method="_on_combo_body_entered"]
 [connection signal="timeout" from="attack_cooldown_timer" to="." method="_on_attack_cooldown_timeout"]
-[connection signal="body_entered" from="HitDetected" to="." method="_on_hit_detected_body_entered"]

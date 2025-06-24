@@ -1,0 +1,57 @@
+[gd_scene load_steps=12 format=3 uid="uid://dsujjhhh62t5"]
+
+[ext_resource type="Texture2D" uid="uid://dk22g0ogcpmnu" path="res://addon assets/blood/B000_nyknck/B001.png" id="1_1hct4"]
+[ext_resource type="Texture2D" uid="uid://b40w1bmmccwue" path="res://addon assets/blood/B000_nyknck/B002.png" id="2_j7452"]
+[ext_resource type="Texture2D" uid="uid://c011g23r72tva" path="res://addon assets/blood/B000_nyknck/B003.png" id="3_06j1o"]
+[ext_resource type="Texture2D" uid="uid://b1qpb802ncaxf" path="res://addon assets/blood/B000_nyknck/B004.png" id="4_253ys"]
+[ext_resource type="Texture2D" uid="uid://c4fkhk6uvshvd" path="res://addon assets/blood/B000_nyknck/B005.png" id="5_y0gjf"]
+[ext_resource type="Texture2D" uid="uid://cus128153y3pr" path="res://addon assets/blood/B000_nyknck/B006.png" id="6_27tng"]
+[ext_resource type="Texture2D" uid="uid://dtp2egg4wpvip" path="res://addon assets/blood/B000_nyknck/B007.png" id="7_jyhum"]
+[ext_resource type="Texture2D" uid="uid://bv7f2u1amugk5" path="res://addon assets/blood/B000_nyknck/B008.png" id="8_c5a5y"]
+[ext_resource type="Texture2D" uid="uid://c8e8xb33131p8" path="res://addon assets/blood/B000_nyknck/B009.png" id="9_g2cxm"]
+[ext_resource type="Texture2D" uid="uid://bcjjeronhtac7" path="res://addon assets/blood/B000_nyknck/B010.png" id="10_rei7y"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0k6ko"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_1hct4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_j7452")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_06j1o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_253ys")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_y0gjf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_27tng")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jyhum")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_c5a5y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_g2cxm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_rei7y")
+}],
+"loop": true,
+"name": &"blood",
+"speed": 14.0
+}]
+
+[node name="blood_effect" type="AnimatedSprite2D"]
+modulate = Color(1, 0.0784314, 1, 0.423529)
+sprite_frames = SubResource("SpriteFrames_0k6ko")
+animation = &"blood"
+frame_progress = 0.856842
+flip_h = true
