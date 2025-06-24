@@ -10,7 +10,8 @@ var attack_cooldown := 0.7
 var attack_cooldown_timer := 0.0
 var attack_duration := 0.3
 var attack_duration_timer := 0.0
-
+@onready var attack_sound = $AttackSFX
+@onready var combo_sound = $ComboSFX
 var combo_ready := false
 var is_combo_attacking := false
 
@@ -75,6 +76,7 @@ func _start_attack(input_vector: Vector2) -> void:
 	attack_cooldown_timer = attack_cooldown
 	velocity = _get_attack_velocity(input_vector)
 	print("attack dash enabled")
+	attack_sound.play()
 
 func _start_combo(input_vector: Vector2) -> void:
 	is_combo_attacking = true
@@ -83,6 +85,7 @@ func _start_combo(input_vector: Vector2) -> void:
 	attack_cooldown_timer = attack_cooldown
 	velocity = _get_combo_velocity(input_vector)
 	print("combo dash enabled")
+	combo_sound.play()
 
 func _get_attack_velocity(input_vector: Vector2) -> Vector2:
 	if input_vector == Vector2.ZERO:

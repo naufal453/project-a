@@ -7,6 +7,12 @@ var speed := 50
 var change_direction_time := 1.0
 var direction_timer := 0.0
 var is_eating := false
+var sheep_exist = true
+@onready var health_bar = $Healthbar
+
+func _ready() -> void:
+	health_bar.init_health(health)
+
 
 func _physics_process(delta: float) -> void:
 	direction_timer -= delta
@@ -51,3 +57,7 @@ func take_damage(amount: int) -> void:
 	print("Random Entity health:", health)
 	if health <= 0:
 		queue_free()
+		sheep_exist = false
+	else:
+		sheep_exist=true
+	health_bar.health = health
